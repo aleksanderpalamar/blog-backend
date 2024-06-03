@@ -43,7 +43,7 @@ go mod tidy
 ```bash
 go run main.go
 ```
-The server will start at `http://localhost:808` (or the port specified in your `.env` file).
+The server will start at `http://localhost:8080` (or the port specified in your `.env` file).
 
 ### API Endpoints
 - GET `/posts`: Retrieve all blog posts.
