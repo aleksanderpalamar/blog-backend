@@ -67,8 +67,8 @@ Path Parameters:
 - `id` (integer): The ID of the post to update.
 **Request Body:**
 
-`title` (string): The updated title of the post.
-`content` (array of strings): The updated content of the post.
+- `title` (string): The updated title of the post.
+- `content` (array of strings): The updated content of the post.
 
 **Example Request**
 ```json
