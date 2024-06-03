@@ -48,8 +48,8 @@ The server will start at `http://localhost:8080` (or the port specified in your 
 ## Docker and Docker Compose
 This project includes a Dockerfile and docker-compose.yml file to help you manage common task more easily. Here's a list of the available commands and a brief description of what they do:
 
-`docker compose up --build`: Builds the Docker image and starts the containers.
-`docker compose down`: Stops and removes the containers.
+- `docker compose up --build`: Builds the Docker image and starts the containers.
+- `docker compose down`: Stops and removes the containers.
 
 ### API Endpoints
 - GET `/posts`: Retrieve all blog posts.
