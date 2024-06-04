@@ -8,8 +8,10 @@ import (
 
 type Post struct {
 	gorm.Model
-	Title   string   `json:"title"`
-	Content []string `json:"content" gorm:"type:json"`
+	Title    string    `json:"title"`
+	Content  []string  `json:"content" gorm:"type:json"`
+	Likes    int       `json:"likes"`
+	Comments []Comment `json:"comments" gorm:"foreignKey:PostID"`
 }
 
 // Implement serializer interface for serializing to JSON

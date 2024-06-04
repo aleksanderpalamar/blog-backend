@@ -1,6 +1,7 @@
 package config
 
 import (
+	"github.com/aleksanderpalamar/backend-blog/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -13,6 +14,9 @@ func ConnectDatabase() {
 	if err != nil {
 		panic("failed to connect database")
 	}
+
+	// Migrate models
+	database.AutoMigrate(&models.Post{}, &models.Comment{}, &models.User{})
 
 	DB = database
 
