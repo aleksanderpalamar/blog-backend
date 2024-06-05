@@ -10,13 +10,16 @@ This project is a backend for a blog application written in GoLang. It provides 
         /routes.go
     /models
         /post.go
+        /comment.go
+        /user.go
     /controllers
         /post_controller.go
+        /comment_controller.go
+        /user_controller.go
     /config
         /database.go
-        /loadEnvVariables.go
     /middleware
-        /corsMiddleware.go
+        /auth.go
 ```
 ## Getting Started
 ### Prerequisites

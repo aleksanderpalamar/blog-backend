@@ -9,17 +9,25 @@ import (
 func SetupRouter() *gin.Engine {
 	router := gin.Default()
 
+	// Cors
+	router.Use(middleware.CORSMiddleware())
+
+	// Public Routes
 	router.POST("/register", controllers.Register)
 	router.POST("/login", controllers.Login)
 
-	router.GET("/posts", controllers.FindAllPosts)
-	router.GET("/posts/:id", controllers.FindPost)
-	router.POST("/posts", middleware.Auth(), controllers.CreatePost)
-	router.PUT("/posts/:id", middleware.Auth(), controllers.UpdatePost)
-	router.DELETE("/posts/:id", middleware.Auth(), controllers.DeletePost)
+	// Protected Routes
+	protected := router.Group("/")
+	protected.Use(middleware.Auth())
 
-	router.GET("/posts/:id/comments", controllers.FindCommentsByPost)
-	router.POST("/posts/:id/comments", middleware.Auth(), controllers.CreateComment)
+	protected.GET("/posts", controllers.FindAllPosts)
+	protected.GET("/posts/:id", controllers.FindPost)
+	protected.POST("/posts", controllers.CreatePost)
+	protected.PUT("/posts/:id", controllers.UpdatePost)
+	protected.DELETE("/posts/:id", controllers.DeletePost)
+
+	protected.GET("/posts/:id/comments", controllers.FindCommentsByPost)
+	protected.POST("/posts/:id/comments", controllers.CreateComment)
 
 	return router
 }

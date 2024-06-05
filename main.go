@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/aleksanderpalamar/backend-blog/config"
-	"github.com/aleksanderpalamar/backend-blog/middleware"
 	"github.com/aleksanderpalamar/backend-blog/models"
 	"github.com/aleksanderpalamar/backend-blog/routes"
 	"github.com/gin-gonic/gin"
@@ -18,11 +17,9 @@ func main() {
 	// Connect to database
 	config.ConnectDatabase()
 	// Migrate models
-	config.DB.AutoMigrate(&models.Post{})
+	config.DB.AutoMigrate(&models.Post{}, &models.Comment{}, &models.User{})
 	// Config routes
 	r = routes.SetupRouter()
-	// Config CORS
-	r.Use(middleware.CORSMiddleware())
 	// Define PORT
 	port := os.Getenv("PORT")
 	if port == "" {
