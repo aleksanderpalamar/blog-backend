@@ -1,4 +1,4 @@
-# Blog Backend
+# Blog Backend API
 This project is a backend for a blog application written in GoLang. It provides a complete CRUD (Create, Read, Update, Delete) functionality for managing blog posts. The project uses GORM for ORM and SQLite as the database.
 
 ## Project Structure
