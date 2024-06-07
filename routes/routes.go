@@ -10,6 +10,7 @@ import (
 func SetupRouter(db *gorm.DB) *gin.Engine {
 	router := gin.Default()
 	router.Use(middleware.InjectDB(db))
+	router.Use(middleware.CORSMiddleware())
 
 	// Public Routes
 	router.POST("/register", controllers.Register)
