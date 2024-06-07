@@ -8,6 +8,8 @@ import (
 	"gorm.io/gorm"
 )
 
+var TestDB *gorm.DB
+
 func SetupDatabase() {
 	var err error
 	DB, err = gorm.Open(sqlite.Open("blog.db"), &gorm.Config{})

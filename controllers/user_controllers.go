@@ -9,10 +9,21 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
+
+func getDB(c *gin.Context) *gorm.DB {
+	db, exists := c.Get("db")
+	if !exists {
+		panic("DB not found in context")
+	}
+	return db.(*gorm.DB)
+}
 
 // function user register
 func Register(c *gin.Context) {
+	db := getDB(c)
+
 	var input models.User
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -26,8 +37,8 @@ func Register(c *gin.Context) {
 	}
 	input.Password = string(hashedPassword)
 
-	if err := config.DB.Create(&input).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to register user"})
+	if err := db.Create(&input).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
 		return
 	}
 
@@ -65,22 +76,4 @@ func Login(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"token": tokenString})
-}
-
-// function user logout
-func Logout(c *gin.Context) {
-	var input models.User
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	var user models.User
-	if err := config.DB.Where("username = ?", input.Username).First(&user).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": "Logout success"})
-
 }

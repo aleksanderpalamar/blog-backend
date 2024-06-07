@@ -19,7 +19,9 @@ func main() {
 	// Migrate models
 	config.DB.AutoMigrate(&models.Post{}, &models.Comment{}, &models.User{})
 	// Config routes
-	r = routes.SetupRouter()
+	r = routes.SetupRouter(
+		config.DB,
+	)
 	// Define PORT
 	port := os.Getenv("PORT")
 	if port == "" {

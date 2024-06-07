@@ -4,13 +4,12 @@ import (
 	"github.com/aleksanderpalamar/backend-blog/controllers"
 	"github.com/aleksanderpalamar/backend-blog/middleware"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
-func SetupRouter() *gin.Engine {
+func SetupRouter(db *gorm.DB) *gin.Engine {
 	router := gin.Default()
-
-	// Cors
-	router.Use(middleware.CORSMiddleware())
+	router.Use(middleware.InjectDB(db))
 
 	// Public Routes
 	router.POST("/register", controllers.Register)
