@@ -22,27 +22,29 @@ func getDB(c *gin.Context) *gorm.DB {
 
 // function user register
 func Register(c *gin.Context) {
-	db := getDB(c)
-
-	var input models.User
+	var input models.RegisterInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	db := getDB(c)
+	var existingUser models.User
+	if err := db.Where("username = ?", input.Username).First(&existingUser).Error; err == nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Username already taken"})
+		return
+	}
+
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
-		return
-	}
-	input.Password = string(hashedPassword)
-
-	if err := db.Create(&input).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": input})
+	user := models.User{Username: input.Username, Password: string(hashedPassword)}
+	db.Create(&user)
+
+	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
 // function user login

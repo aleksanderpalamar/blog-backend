@@ -21,7 +21,7 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	// Protected Routes
 	protected := router.Group("/")
 	protected.Use(middleware.Auth())
-		
+
 	protected.POST("/posts", controllers.CreatePost)
 	protected.PUT("/posts/:id", controllers.UpdatePost)
 	protected.DELETE("/posts/:id", controllers.DeletePost)

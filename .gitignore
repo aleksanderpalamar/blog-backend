@@ -2,3 +2,5 @@ blog.db
 .env
 
 ./tests/test.db
+./tests/test_blog.db
+.test_blog.db
