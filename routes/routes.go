@@ -15,13 +15,13 @@ func SetupRouter(db *gorm.DB) *gin.Engine {
 	// Public Routes
 	router.POST("/register", controllers.Register)
 	router.POST("/login", controllers.Login)
+	router.GET("/posts", controllers.FindAllPosts)
+	router.GET("/posts/:id", controllers.FindPost)
 
 	// Protected Routes
 	protected := router.Group("/")
 	protected.Use(middleware.Auth())
-
-	protected.GET("/posts", controllers.FindAllPosts)
-	protected.GET("/posts/:id", controllers.FindPost)
+		
 	protected.POST("/posts", controllers.CreatePost)
 	protected.PUT("/posts/:id", controllers.UpdatePost)
 	protected.DELETE("/posts/:id", controllers.DeletePost)

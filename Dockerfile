@@ -13,6 +13,6 @@ ENV GO111MODULE=on
 
 RUN go build -o main .
 
-EXPOSE 3000
+EXPOSE 3002
 
 CMD ["./main"]
