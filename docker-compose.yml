@@ -13,7 +13,8 @@ services:
       - DB_PASSWORD=578nwmOLN
       - DB_NAME=blog
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   postgres:
     image: postgres:latest
@@ -24,6 +25,11 @@ services:
       POSTGRES_DB: blog
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

@@ -5,19 +5,22 @@ import (
 	"os"
 
 	"github.com/aleksanderpalamar/backend-blog/config"
-	"github.com/aleksanderpalamar/backend-blog/models"
 	"github.com/aleksanderpalamar/backend-blog/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+	mode := os.Getenv("MODE")
+	if mode == "" {
+		mode = gin.DebugMode
+	}
+	gin.SetMode(mode)
+
 	r := gin.Default()
 	// Load variables from .env file
 	config.LoadEnvVariables()
 	// Connect to database
 	config.ConnectDatabase()
-	// Migrate models
-	config.DB.AutoMigrate(&models.Post{}, &models.Comment{}, &models.User{})
 	// Config routes
 	r = routes.SetupRouter(
 		config.DB,
