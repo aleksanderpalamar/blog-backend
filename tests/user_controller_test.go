@@ -19,7 +19,7 @@ import (
 )
 
 func setupTestRouter() *gin.Engine {
-	database, _ := gorm.Open(sqlite.Open("test_blog.db"), &gorm.Config{})
+	database, _ := gorm.Open(sqlite.Open("file::memory:?cache=shared"), &gorm.Config{})
 	config.DB = database
 	config.DB.AutoMigrate(&models.User{})
 
