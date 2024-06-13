@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-ENV CGO_ENABLED=1
+ENV GO111MODULE=on
 
 RUN go build -o main .
 
