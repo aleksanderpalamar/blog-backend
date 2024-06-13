@@ -11,8 +11,11 @@ import (
 
 func main() {
 	mode := os.Getenv("MODE")
-	if mode == "" {
-		mode = gin.DebugMode
+	if mode == "production" {
+		mode = "release"
+	} else {
+		mode = "debug"
+		log.Println("Running in debug mode")
 	}
 	gin.SetMode(mode)
 

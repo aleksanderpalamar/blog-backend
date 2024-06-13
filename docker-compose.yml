@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - "5000:5000"
     environment:
       - DB_HOST=postgres
       - DB_USER=admin
@@ -21,9 +21,9 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: 578nwmOLN
-      POSTGRES_DB: blog
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=578nwmOLN
+      - POSTGRES_DB=blog
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
