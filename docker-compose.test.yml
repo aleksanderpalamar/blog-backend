@@ -14,8 +14,7 @@ services:
       - DB_NAME=blog
     depends_on:
       postgres:
-        condition: service_healthy
-    command: ["go", "test", "./..."]  # Substitua pelo comando para rodar seus testes
+        condition: service_healthy  # Substitua pelo comando para rodar seus testes
 
   postgres:
     image: postgres:latest
