@@ -16,6 +16,7 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    command: ["go", "test", "./..."]
 
   postgres:
     image: postgres:latest
