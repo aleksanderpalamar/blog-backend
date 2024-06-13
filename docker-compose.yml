@@ -13,7 +13,6 @@ services:
       - DB_PASSWORD=578nwmOLN
       - DB_NAME=blog
       - GIN_MODE=release
-      - CGO_ENABLED=1
     depends_on:
       postgres:
         condition: service_healthy
