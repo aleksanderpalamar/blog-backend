@@ -15,7 +15,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: ["go", "mod", "download"]
+    command: >
+      sh -c "
+      go mod download &&
+      go test ./tests/...
+      "
 
   postgres:
     image: postgres:latest
