@@ -19,7 +19,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRES_USER: admin
-          POSTGRES_PASSWORD: 578nwmOLN
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_DB: blog
         options: >-
           --health-cmd pg_isready
@@ -30,7 +30,7 @@ jobs:
     env:
       DB_HOST: localhost
       DB_USER: admin
-      DB_PASSWORD: 578nwmOLN
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
       DB_NAME: blog
       PORT: 5000
 
@@ -62,6 +62,9 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/blog-backend:latest
+
+    - name: Prepare environment variables
+      run: echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
     - name: Run tests
       run: docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit --exit-code-from blog

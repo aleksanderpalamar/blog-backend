@@ -8,11 +8,11 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DB_HOST=postgres
-      - DB_USER=admin
-      - DB_PASSWORD=578nwmOLN
-      - DB_NAME=blog
-      - GIN_MODE=release
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
+      - GIN_MODE=${GIN_MODE}
     depends_on:
       postgres:
         condition: service_healthy
@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=578nwmOLN
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=blog
     volumes:
       - postgres_data:/var/lib/postgresql/data
