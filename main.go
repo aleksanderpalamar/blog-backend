@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/aleksanderpalamar/backend-blog/config"
+	"github.com/aleksanderpalamar/backend-blog/middleware"
 	"github.com/aleksanderpalamar/backend-blog/routes"
 	"github.com/gin-gonic/gin"
 )
@@ -20,6 +21,8 @@ func main() {
 	gin.SetMode(mode)
 
 	r := gin.Default()
+	// Cors middleware
+	middleware.CORSMiddleware()
 	// Load variables from .env file
 	config.LoadEnvVariables()
 	// Connect to database
